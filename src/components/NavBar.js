@@ -8,7 +8,8 @@ import { AppBar, Badge, Grid, IconButton, InputBase, Toolbar, makeStyles } from 
 
 const useStyles = makeStyles( {
     root: {
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+		transform: 'translateZ(0)'
     },
     searchInput:{
         opacity:'0.6',

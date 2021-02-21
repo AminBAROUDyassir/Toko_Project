@@ -3,8 +3,9 @@ import './App.css';
 import SideBar from "../components/SideBar";
 import { CssBaseline, makeStyles } from '@material-ui/core';
 import Header from '../components/NavBar';
-import PageHeader from '../components/PageHeader';
-import DashboardIcon from '@material-ui/icons/Dashboard';
+
+
+import UsersTables from '../Pages/UsersTables';
 
 
 const useStyles = makeStyles({
@@ -22,11 +23,7 @@ function App() {
       <SideBar/>
       <div className={classes.appMain}>
       <Header/>
-      <PageHeader
-      title="title"
-      subtitle="subtitle"
-      icon={<DashboardIcon/>}
-      />
+      <UsersTables/>
       </div>
       <CssBaseline/>
     </>

@@ -25,7 +25,7 @@ const useStyles = makeStyles({
 		height: '100%',
 		backgroundColor: '#253053',
 		'& .MuiSvgIcon-root': {
-			margin: '8px 8px 8px 10px'
+			margin: '8px 10px 8px 10px'
 		}
 	}
 });
@@ -36,10 +36,10 @@ export default function SideBar() {
 	return (
 		<div className={classes.sideBar}>
 			<Divider />
-			<List alignItems="center">
+			<List>
 				<ListItem button key="text">
 					<ListItemAvatar>
-						<Avatar alt="LogoMain" src={logoMain} />
+						<Avatar alt="LogoMain" src={logoMain}/>
 					</ListItemAvatar>
 
 					<ListItemText primary="CREATIVE TIM" />
@@ -56,13 +56,13 @@ export default function SideBar() {
 			</List>
 			<List>
 				<ListItem button key="text">
-					<DashboardIcon />
+					<DashboardIcon fontSize="large"/>
 					<ListItemText primary="Dashboard" />
 				</ListItem>
 			</List>
 			<List>
 				<ListItem button key="text">
-					<GridOnIcon />
+					<GridOnIcon fontSize="large"/>
 
 					<ListItemText primary="Tables" />
 				</ListItem>
