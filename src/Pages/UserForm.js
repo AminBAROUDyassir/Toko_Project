@@ -8,15 +8,18 @@ import {
 	TextField,
 	Paper,
 	makeStyles,
-	Button
+	Button,
+	InputAdornment,
+	FilledInput
 } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import PageHeader from '../components/PageHeader';
 import { LaptopWindows } from '@material-ui/icons';
+import * as userService from '../Services/userService';
 
 const initialFValues = {
-	_id: 0,
+	// _id: 0,
 	Fname: '',
 	Lname: '',
 	email: '',
@@ -49,11 +52,14 @@ export default function UserForm() {
 		setErrors({ ...temp });
 		return Object.values(temp).every((x) => x == ''); // if all validation elements are true it return true
 	};
-
+const resetForm = () => {
+	setValues(initialFValues);
+	setErrors({})
+}
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log(validate())
-		if (validate()) window.alert('testing');
+		if (validate()) userService.insertUser(values);
+		resetForm();
 	};
 	const [ values, setValues ] = useState(initialFValues);
 	const [ errors, setErrors ] = useState({});
@@ -72,6 +78,7 @@ export default function UserForm() {
 			<Grid container>
 				<Grid item xs={6}>
 					<TextField
+					
 						variant="outlined"
 						label="First Name"
 						name="Fname"
@@ -82,6 +89,7 @@ export default function UserForm() {
 						inputProps={{maxLength :30}}
 					/>
 					<TextField
+					
 						variant="outlined"
 						label="Last Name"
 						name="Lname"
@@ -92,6 +100,7 @@ export default function UserForm() {
 						inputProps={{maxLength :30}}
 					/>
 					<TextField
+					
 						variant="outlined"
 						label="Email"
 						type="email"
@@ -121,11 +130,14 @@ export default function UserForm() {
 						</RadioGroup>
 					</FormControl>
 					<TextField
+					
 						variant="outlined"
 						type="date"
-						label=""
+						label="birthday"
+						placeholder="birthdayy"
 						name="birthday"
 						value={values.birthday}
+						InputLabelProps={{ shrink: true }}
 						onChange={handleInputChange}
 						error={errors.birthday}
 						helperText={errors.birthday}
@@ -135,6 +147,7 @@ export default function UserForm() {
 						type="number"
 						label="Experiences Years"
 						name="experienceY"
+						InputProps={{ endAdornment: <InputAdornment position="end">Years</InputAdornment>,}}
 						value={values.experienceY}
 						onChange={handleInputChange}
 						onInput={(e)=>{e.target.value = Math.max(0, parseInt(e.target.value) ).toString().slice(0,2)}}
