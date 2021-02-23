@@ -27,7 +27,6 @@ const initialFValues = {
 	address: '',
 	gender: 'male',
 	experienceY: '',
-	isAdmin: 'false',
 };
 
 const useStyles = makeStyles((theme) => ({

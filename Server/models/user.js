@@ -10,6 +10,7 @@ let user = mongoose.model('user',
         gender: {type:String, maxLength: 10},
         experienceY: {type:Number, maxLength: 10},
         isAdmin: {type:Boolean},
+        date: {type:Date, default: Date.now},
 
 })
 
