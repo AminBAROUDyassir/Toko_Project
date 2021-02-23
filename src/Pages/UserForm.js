@@ -19,14 +19,15 @@ import { LaptopWindows } from '@material-ui/icons';
 import * as userService from '../Services/userService';
 
 const initialFValues = {
-	// _id: 0,
+	id: 0,
 	Fname: '',
 	Lname: '',
 	email: '',
 	birthday: '',
 	address: '',
 	gender: 'male',
-	experienceY: ''
+	experienceY: '',
+	isAdmin: 'false',
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -42,9 +43,11 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-export default function UserForm() {
+export default function UserForm(props) {
+
+	const {addOrEdit, recordForEdit }= props;
 	const validate = () => {
-		let temp = {};
+		let temp = {...errors};
 		temp.Fname = values.Fname ? '' : 'This field is required.';
 		temp.Lname = values.Lname ? '' : 'This field is required.';
 		temp.email = values.email ? '' : 'Email is  required.';
@@ -58,8 +61,7 @@ const resetForm = () => {
 }
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		if (validate()) userService.insertUser(values);
-		resetForm();
+		if (validate()) {addOrEdit(values, resetForm);}
 	};
 	const [ values, setValues ] = useState(initialFValues);
 	const [ errors, setErrors ] = useState({});
@@ -72,6 +74,10 @@ const resetForm = () => {
 			[name]: value
 		});
 	};
+useEffect(() => {
+	if (recordForEdit != null)
+	setValues({...recordForEdit})}, [recordForEdit])
+
 
 	return (
 		<form className={classes.root} onSubmit={handleSubmit}>

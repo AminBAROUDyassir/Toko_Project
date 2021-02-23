@@ -7,12 +7,15 @@ import {
 	ListItemIcon,
 	ListItemText,
 	ListItemAvatar,
-	Avatar
-} from '@material-ui/core';
+	Avatar,
+	Drawer,
+	} from '@material-ui/core';
 import logoMain from '../logo.svg';
 import logoUser from '../logo.jpg';
 import GridOnIcon from '@material-ui/icons/GridOn';
 import DashboardIcon from '@material-ui/icons/Dashboard';
+import { Link } from 'react-router-dom';
+import reactDom from 'react-dom';
 
 const useStyles = makeStyles({
 	sideBar: {
@@ -37,9 +40,9 @@ export default function SideBar() {
 		<div className={classes.sideBar}>
 			<Divider />
 			<List>
-				<ListItem button key="text">
+				<ListItem  key="text">
 					<ListItemAvatar>
-						<Avatar alt="LogoMain" src={logoMain}/>
+						<Avatar alt="LogoMain" src={logoMain} />
 					</ListItemAvatar>
 
 					<ListItemText primary="CREATIVE TIM" />
@@ -47,24 +50,23 @@ export default function SideBar() {
 			</List>
 			<Divider />
 			<List>
-				<ListItem button key="text">
+				<ListItem button key="text" component={Link} to="/profile">
 					<ListItemAvatar>
 						<Avatar alt="Remy Sharp" src={logoUser} />
 					</ListItemAvatar>
-					<ListItemText primary="Tokochi" />
+						<ListItemText primary="Sign in" />	
 				</ListItem>
 			</List>
 			<List>
-				<ListItem button key="text">
-					<DashboardIcon fontSize="large"/>
-					<ListItemText primary="Dashboard" />
+				<ListItem button key="text" component={Link} to="/dashboard">
+					<DashboardIcon fontSize="large" />
+						<ListItemText primary="Dashboard" />
 				</ListItem>
 			</List>
 			<List>
-				<ListItem button key="text">
-					<GridOnIcon fontSize="large"/>
-
-					<ListItemText primary="Tables" />
+				<ListItem button key="text" component={Link} to="/users-tables">
+					<GridOnIcon fontSize="large" />
+						<ListItemText primary="Tables" />
 				</ListItem>
 			</List>
 		</div>

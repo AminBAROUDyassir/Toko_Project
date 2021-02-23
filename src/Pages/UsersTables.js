@@ -4,9 +4,13 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import PageHeader from '../components/PageHeader';
 import SearchIcon from '@material-ui/icons/Search';
 import AddIcon from '@material-ui/icons/Add';
+import EditIcon from '@material-ui/icons/Edit';
+import CloseIcon from '@material-ui/icons/Close';
 import { Paper, makeStyles, TableRow, TableCell, TableBody, InputAdornment, Table, TableContainer, TableHead, TablePagination, TableSortLabel, Toolbar, TextField, Button } from '@material-ui/core';
 import *  as userService from "../Services/userService";
 import Popup from "../components/Popup"
+import Notification from "../components/Notification";
+import ConfirmDialog from "../components/ConfirmDialog";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -43,6 +47,12 @@ const useStyles = makeStyles((theme) => ({
         position:'absolute',
         right: '10px',
         textTransform: 'none',
+        
+    },
+    editButton: {
+        margin:'6px',
+        minWidth: 0
+        
     }
 }));
 
@@ -53,6 +63,7 @@ const HeadCells = [
     { id: 'gender', label: 'Gender' },
     { id: 'address', label: 'Address' },
     { id: 'age', label: 'Age' },
+    { id: 'settings', label: 'Settings', disableSorting:true },
 ]
 
 export default function UsersTables() {
@@ -60,7 +71,10 @@ export default function UsersTables() {
 const classes = useStyles();
 const [records, setRecords]=useState(userService.getAllUsers)
 const [filterFn, setFilterFn]=useState({fn: items => {return items;}})
+const [confirmDialog, setConfirmDialog ] = useState({isOpen:false, title:'', subTitle:''});
+const [notify, setNotify] = useState({isOpen:false, message:'', type:''})
 const [openPopup, setOpenPopup] = useState(false)
+const [recordForEdit, setRecordForEdit]= useState(null)
 const getAge = birthDate => 
 Math.floor((new Date() - new Date(birthDate).getTime()) / 3.15576e+10)
 const pages =[5, 10, 25]
@@ -83,7 +97,36 @@ const handleSearch = e =>{
             return items.filter(x => x.Fname.toLowerCase().includes(target.value))
         }
     })
-
+}
+    const addOrEdit = (user, resetForm) => {
+        if (user.id == 0)
+        userService.insertUser(user);
+        else
+        userService.updateUser(user)
+         resetForm();
+         setRecordForEdit(null)
+         setOpenPopup(false);
+         setRecords(userService.getAllUsers);
+         setNotify({
+             isOpen: true,
+             message: 'Submitted Successfully',
+             type: 'success'
+         })
+    }    
+const openInPopup = item => {
+    setRecordForEdit(item)
+    setOpenPopup(true)
+}
+const onDelete = id => {
+    setConfirmDialog({...ConfirmDialog, isOpen:false})
+    userService.deleteUser(id);
+    setRecords(userService.getAllUsers);
+    setNotify({
+        isOpen: true,
+        message: 'Deleted Successfully',
+        type: 'error'
+         })
+    
 }
 
 //***sorting functions from material-ui.com****//
@@ -147,7 +190,7 @@ const recordsAfterPaging = () => {
         size="large"
         color="primary"
         variant="outlined"
-        onClick={() => setOpenPopup(true)}
+        onClick={() => {setOpenPopup(true); setRecordForEdit(null);}}
         startIcon = {<AddIcon/>}>Add New</Button>
     </Toolbar>
     <TableContainer>
@@ -174,6 +217,26 @@ const recordsAfterPaging = () => {
                             <TableCell>{item.gender}</TableCell>
                             <TableCell>{item.address}</TableCell>
                             <TableCell>{getAge(item.birthday)}</TableCell>
+                            <TableCell><Button className={classes.editButton} 
+                            variant="contained" 
+                            color="primary" 
+                            onClick ={ () => {openInPopup(item)}}
+                            size="small"><EditIcon 
+                            fontSize="small"/></Button>
+                            <Button className={classes.editButton} 
+                            variant="contained" 
+                            onClick ={ () => {
+                                setConfirmDialog({
+                                    isOpen:true,
+                                    title:"Are You sure to delete this User ?",
+                                    subTitle:"you can't undo this action",
+                                    onConfirm: () => {onDelete(item.id)}
+                                })
+                        }}
+                            color="secondary" 
+                            size="small"><CloseIcon 
+                            fontSize="small"/></Button>
+                             </TableCell>
                      </TableRow>) )
                 }
             </TableBody>
@@ -186,13 +249,23 @@ const recordsAfterPaging = () => {
                   count= {records.length}
                   onChangePage={handlechangePage}
                   onChangeRowsPerPage={handleChangeRowsPerPage}/>
-    </TableContainer>
-</Paper>
-<Popup
-    title = "User Form"
-    openPopup = {openPopup}
-    setOpenPopup = {setOpenPopup}>
-    <UserForm/></Popup>
+             </TableContainer>
+            </Paper>
+        <Popup
+                title = "User Form"
+                openPopup = {openPopup}
+                setOpenPopup = {setOpenPopup}>
+                <UserForm
+                recordForEdit={recordForEdit}
+                addOrEdit={addOrEdit}/>
+        </Popup>
+        <Notification
+        notify={notify}
+        setNotify={setNotify} />
+        <ConfirmDialog
+            confirmDialog = {confirmDialog}
+            setConfirmDialog = {setConfirmDialog}
+        />
 </>
     )
 }

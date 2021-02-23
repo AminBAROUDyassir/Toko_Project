@@ -25,7 +25,7 @@ export default function Popup(props) {
                     <Typography variant="h5" component="div" style={{ flexGrow: 1 }}>
                         {title}
                     </Typography>
-                    <Button
+                    <Button style={{ minWidth: 0 }}
                         size="medium"
                         color="secondary"
                         variant="contained"
