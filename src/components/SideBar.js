@@ -50,7 +50,7 @@ export default function SideBar() {
 			</List>
 			<Divider />
 			<List>
-				<ListItem button key="text" component={Link} to="/profile">
+				<ListItem button key="text" component={Link} to="/login">
 					<ListItemAvatar>
 						<Avatar alt="Remy Sharp" src={logoUser} />
 					</ListItemAvatar>

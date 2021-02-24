@@ -1,37 +1,45 @@
+import axios from 'axios';
+import React, { useEffect } from 'react';
 const Keys = {
 	users: 'users',
 	userId: 'userId'
 };
+const apiEndPoint = "http://localhost:4000/usersList"
 
 export function insertUser(data) {
-	let users = getAllUsers();
-	data['id'] = generateUserId()
-    users.push(data);
-	localStorage.setItem('users', JSON.stringify(users));
+	axios.post(apiEndPoint, data)
+	.catch(err => window.alert('error while creating user'))
+	// let users = getAllUsers();
+	// data['id'] = generateUserId()
+    // users.push(data);
+	// localStorage.setItem('users', JSON.stringify(users));
 }
 
-export function generateUserId() {
-	if (localStorage.getItem(Keys.userId) == null) localStorage.setItem(Keys.userId, '0');
-	var id = parseInt(localStorage.getItem(Keys.userId));
-	localStorage.setItem(Keys.userId, (++id).toString());
-	return id;
-}
 
 export function updateUser(data) {
-    let users = getAllUsers();
-    let recordIndex = users.findIndex(x => x.id == data.id);
-    users[recordIndex] = { ...data }
-    localStorage.setItem(Keys.users, JSON.stringify(users))
+	
+axios.put(apiEndPoint+'/'+data._id, data)
+.catch(err => window.alert('error while deleting user'))
+    // let users = getAllUsers();
+    // let recordIndex = users.findIndex(x => x.id == data.id);
+    // users[recordIndex] = { ...data }
+    // localStorage.setItem(Keys.users, JSON.stringify(users))
 }
 
 export function deleteUser(id) {
-    let users = getAllUsers();
-    users = users.filter(x => x.id != id)
-    localStorage.setItem(Keys.users, JSON.stringify(users));
+	axios.delete(apiEndPoint+'/'+id)
+	.catch(err => window.alert('error while deleting user'))
+    // let users = getAllUsers();
+    // users = users.filter(x => x.id != id)
+    // localStorage.setItem(Keys.users, JSON.stringify(users));
 }
 
 
-export function getAllUsers() {
-	if (localStorage.getItem(Keys.users) == null) localStorage.setItem(Keys.users, JSON.stringify([]));
-	return JSON.parse(localStorage.getItem(Keys.users));
+export  async function  getAllUsers() {
+
+	const response = await axios.get(apiEndPoint)
+	return Object.values(response.data)
+//    .catch(err => window.alert('error while getting users List'))
+	// if (localStorage.getItem(Keys.users) == null) localStorage.setItem(Keys.users, JSON.stringify([]));
+	// return JSON.parse(localStorage.getItem(Keys.users));
 }

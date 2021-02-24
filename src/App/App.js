@@ -6,6 +6,16 @@ import SideBar from "../components/SideBar";
 import UsersTables from '../Pages/UsersTables';
 import Header from '../components/NavBar';
 import { CssBaseline, makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core';
+import axios from 'axios';
+
+axios.interceptors.response.use(null, error  => {
+  const expectedError = error.response && error.response.status >= 400 && error.response.status <500
+  if(!expectedError) {
+    console.log("Logging the error", error);
+    // alert("An unexpected error occurred")
+  }
+ return Promise.reject(error);
+});
 
 
 const theme = createMuiTheme({
@@ -40,7 +50,8 @@ const theme = createMuiTheme({
 const useStyles = makeStyles({
   appMain: {
     paddingLeft: '320px',
-    width: '100%'
+    width: '100%',
+    
   }
 })
 
@@ -50,12 +61,12 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-       <SideBar/>
       <div className={classes.appMain}>
+       <SideBar/>
       <Header/>
       <Route path="/users-tables" exact component={UsersTables} />
       <Route path="/dashboard" exact component={DashBoard} />
-      <Route path="/profile" exact component={SignIn} />
+      <Route path="/login" exact component={SignIn} />
       </div>
       <CssBaseline/>
       </ThemeProvider>

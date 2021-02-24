@@ -9,8 +9,11 @@ router.get('/', (req, res) => {
     .catch( err => console.error('Error while retrieving Users List : '+ JSON.stringify(err, undefined,2)) )
 })
 
-router.post('/', (req, res) => {
-    let newUser = new user ({
+router.post('/', async (req, res) => {
+    let newUser = await user.findOne({ email: req.body.email});
+    if (newUser) return res.status(400).send('User already registred')
+     newUser = new user ({
+                
                 Fname: req.body.Fname,
                 Lname: req.body.Lname,
                 email: req.body.email,
@@ -18,9 +21,10 @@ router.post('/', (req, res) => {
                 address: req.body.address,
                 gender: req.body.gender,
                 experienceY: req.body.experienceY,
+                
     })
     newUser.save()
-    .then ( newuser => res.send(newuser))
+    .then ( newuser => res.send({id:newuser._id, ...newuser._doc}))
     .catch( err => console.error('Error while creating a newUser : '+ JSON.stringify(err, undefined,2)) )
 })
 

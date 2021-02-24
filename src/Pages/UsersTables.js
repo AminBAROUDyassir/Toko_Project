@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import UserForm from './UserForm'
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import PageHeader from '../components/PageHeader';
@@ -9,10 +9,11 @@ import CloseIcon from '@material-ui/icons/Close';
 import { Paper, makeStyles, TableRow, TableCell, TableBody, InputAdornment, Table, TableContainer, TableHead, TablePagination, TableSortLabel, Toolbar, TextField, Button } from '@material-ui/core';
 import *  as userService from "../Services/userService";
 import Popup from "../components/Popup"
+import axios from 'axios';
 import Notification from "../components/Notification";
 import ConfirmDialog from "../components/ConfirmDialog";
 
-
+const apiEndPoint = "http://localhost:4000/usersList"
 const useStyles = makeStyles((theme) => ({
 	pageContent: {
             padding:theme.spacing(3),
@@ -67,9 +68,9 @@ const HeadCells = [
 ]
 
 export default function UsersTables() {
-
 const classes = useStyles();
-const [records, setRecords]=useState(userService.getAllUsers)
+// const [records, setRecords]=useState(userService.getAllUsers)
+const [records, setRecords]=useState([])
 const [filterFn, setFilterFn]=useState({fn: items => {return items;}})
 const [confirmDialog, setConfirmDialog ] = useState({isOpen:false, title:'', subTitle:''});
 const [notify, setNotify] = useState({isOpen:false, message:'', type:''})
@@ -87,6 +88,16 @@ const handleChangeRowsPerPage = event =>{
     setRowsPerPage(parseInt(event.target.value, 10))
    setPage(0);
 }
+
+useEffect (() => {
+ axios.get(apiEndPoint).then( res => { 
+    const data  = Object.values(res.data)
+    setRecords(data)
+    console.log(records)
+}, )
+
+},[notify] )
+
 const handleSearch = e =>{
     let target = e.target;
     setFilterFn({
@@ -99,14 +110,14 @@ const handleSearch = e =>{
     })
 }
     const addOrEdit = (user, resetForm) => {
-        if (user.id == 0)
+        if (user._id == 0)
         userService.insertUser(user);
         else
         userService.updateUser(user)
          resetForm();
          setRecordForEdit(null)
          setOpenPopup(false);
-         setRecords(userService.getAllUsers);
+        //  setRecords(userService.getAllUsers);
          setNotify({
              isOpen: true,
              message: 'Submitted Successfully',
@@ -120,7 +131,7 @@ const openInPopup = item => {
 const onDelete = id => {
     setConfirmDialog({...ConfirmDialog, isOpen:false})
     userService.deleteUser(id);
-    setRecords(userService.getAllUsers);
+    // setRecords(userService.getAllUsers);
     setNotify({
         isOpen: true,
         message: 'Deleted Successfully',
@@ -153,7 +164,9 @@ function descendingComparator(a, b, orderBy) {
     }
  return 0;
 }
+
 const recordsAfterPaging = () => {
+    
     return stableSort(filterFn.fn(records), getComparator(order, orderBy)).slice(page*rowsPerPage, (page+1)*rowsPerPage);
 }
     const  handleSortRequest  = (cellId) => {
@@ -211,7 +224,7 @@ const recordsAfterPaging = () => {
                 </TableHead>
              <TableBody>
                 {recordsAfterPaging().map(item => 
-                    (<TableRow key={item.id}>
+                    (<TableRow key={item._id}>
                             <TableCell>{item.Fname + " "+item.Lname}</TableCell>
                             <TableCell>{item.email}</TableCell>
                             <TableCell>{item.gender}</TableCell>
@@ -230,7 +243,7 @@ const recordsAfterPaging = () => {
                                     isOpen:true,
                                     title:"Are You sure to delete this User ?",
                                     subTitle:"you can't undo this action",
-                                    onConfirm: () => {onDelete(item.id)}
+                                    onConfirm: () => {onDelete(item._id)}
                                 })
                         }}
                             color="secondary" 
