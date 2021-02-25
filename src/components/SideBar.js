@@ -20,12 +20,11 @@ import reactDom from 'react-dom';
 const useStyles = makeStyles({
 	sideBar: {
 		color: 'white',
-		display: 'flex',
-		flexDirection: 'column',
-		position: 'absolute',
+		position: 'fixed',
 		left: '0px',
+		top:'0px',
 		width: '250px',
-		height: '100%',
+		height: "150vh",
 		backgroundColor: '#253053',
 		'& .MuiSvgIcon-root': {
 			margin: '8px 10px 8px 10px'
@@ -44,7 +43,6 @@ export default function SideBar() {
 					<ListItemAvatar>
 						<Avatar alt="LogoMain" src={logoMain} />
 					</ListItemAvatar>
-
 					<ListItemText primary="CREATIVE TIM" />
 				</ListItem>
 			</List>

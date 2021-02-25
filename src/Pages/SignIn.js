@@ -121,23 +121,6 @@ export default function SignIn({ loggedIn, logout, login }) {
               >
                 Sign In
               </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="#" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </Grid>
-              </Grid>
-              <Box mt={5}>
-              <Typography variant="body2" color="textSecondary" align="center">
-              {"Copyright © "}<Link Link color="inherit" href="#">Demo test</Link>{" "}{new Date().getFullYear()}{"."}</Typography>
-
-              </Box>
             </form>
           </Grid>
         </Grid>

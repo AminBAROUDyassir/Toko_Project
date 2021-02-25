@@ -6,6 +6,7 @@ import {
 	FormLabel,
 	Grid,
     Card,
+    IconButton,
 	CardContent,
 	CardMedia,
 	TextField,
@@ -54,15 +55,15 @@ export default function Cards({title, subtitle, status, iconHead, iconBot}) {
         // className={classes.cardContent}
 		<div >
 				<Card className={classes.card}> 
-                <Grid container style={{marginBottom:'30px'}} justify="space-between" >
-                <Grid  item >{iconHead}</Grid >
-                <Grid item  ><Typography  align="right" className={classes.cardTitle} variant="subtitle1">{title}</Typography>
+                <Grid container style={{marginBottom:'25px'}} justify="space-between" >
+                <Grid  item lg={3} sm={3}>{iconHead}</Grid >
+                <Grid item  ><Typography  align="right" className={classes.cardTitle} variant="body1">{title}</Typography>
                 <Typography   align="right" className={classes.cardTitle}  variant="h4">{subtitle}</Typography></Grid >
                 </Grid>
                 <Grid  item style={{}}  >
             <Divider variant="middle"/>
 					<CardContent className={classes.cardcontent}>
-                    {iconBot}
+                    <IconButton style={{position:'relative', bottom:'15px',}} size='meduim' aria-label="{status}">{iconBot}</IconButton>
 						<Typography gutterBottom variant="h6" component="h5">{status}</Typography>
 					</CardContent>
 					<CardActions />
