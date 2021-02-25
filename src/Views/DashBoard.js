@@ -3,7 +3,7 @@ import Cards from '../components/Cards';
 import Map from '../components/Map';
 import DashTable from '../components/DashTable';
 import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
-import {FormControl,FormControlLabel,FormLabel,Grid,Radio,RadioGroup,TextField,Paper,makeStyles,Button,InputAdornment,FilledInput} from '@material-ui/core';
+import {Typography, Grid,Radio,RadioGroup,TextField,Paper,makeStyles,Button,InputAdornment,FilledInput} from '@material-ui/core';
 import PublicIcon from '@material-ui/icons/Public';
 import ReplayIcon from '@material-ui/icons/Replay';
 import ClearIcon from '@material-ui/icons/Clear';
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     paper:{
         
         backgroundColor: '#fdfdff',
-        margin: theme.spacing(2),
+        margin: theme.spacing(1),
     }
 }));
 
@@ -38,7 +38,7 @@ export default function DashBoard() {
 						subtitle="+ 112M"
 						status="Update Now"
 						iconHead={<PublicIcon color="primary" className={classes.icons} />}
-						iconBot={<ReplayIcon fontSize="large" />}
+						iconBot={<ReplayIcon  />}
 					/>
 				</Grid>
 				<Grid item  lg={3} sm={6}>
@@ -47,7 +47,7 @@ export default function DashBoard() {
 						subtitle="+ 2,4M"
 						status="Update Now"
 						iconHead={<AirlineSeatFlatIcon color="secondary" className={classes.icons} />}
-						iconBot={<ReplayIcon fontSize="large" />}
+						iconBot={<ReplayIcon  />}
 					/>
 				</Grid>
 				<Grid item  lg={3} sm={6}>
@@ -56,7 +56,7 @@ export default function DashBoard() {
 						subtitle="+85M"
 						status="Update Now"
 						iconHead={<SentimentVeryDissatisfiedIcon className={classes.icons} />}
-						iconBot={<ReplayIcon fontSize="large" />}
+						iconBot={<ReplayIcon  />}
 					/>
 				</Grid>
 				<Grid item  lg={3} sm={6}>
@@ -65,14 +65,14 @@ export default function DashBoard() {
 						subtitle="+21M"
 						status="Update Now"
 						iconHead={<MoodIcon style={{ color: 'green' }} className={classes.icons} />}
-						iconBot={<ReplayIcon fontSize="large" />}
+						iconBot={<ReplayIcon  />}
 					/>
 				</Grid>
 			</Grid>
             <Paper className={classes.paper}>
             <Grid container  spacing={0} justify="space-between">
-            <Grid item ><DashTable/></Grid>
-            <Grid item lg={8}><Map/></Grid>
+            <Grid item><DashTable/></Grid>
+            <Grid item lg={8} ><Map/></Grid>
             </Grid>
             </Paper>
 		</div>

@@ -1,10 +1,7 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
-const Keys = {
-	users: 'users',
-	userId: 'userId'
-};
-const apiEndPoint = "http://localhost:4000/usersList"
+
+const apiEndPoint = "http://localhost:4000/api/usersList"
 
 export function insertUser(data) {
 	axios.post(apiEndPoint, data)

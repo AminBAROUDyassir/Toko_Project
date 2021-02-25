@@ -1,9 +1,9 @@
 import './App.css';
 import {  Route, NavLink } from 'react-router-dom'
-import DashBoard from '../Pages/DashBoard';
-import SignIn from '../Pages/SignIn';
+import DashBoard from '../Views/DashBoard';
+import SignIn from '../Views/SignIn';
 import SideBar from "../components/SideBar";
-import UsersTables from '../Pages/UsersTables';
+import UsersTables from '../Views/UsersTables';
 import Header from '../components/NavBar';
 import { CssBaseline, makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core';
 import axios from 'axios';

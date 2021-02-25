@@ -13,7 +13,7 @@ import axios from 'axios';
 import Notification from "../components/Notification";
 import ConfirmDialog from "../components/ConfirmDialog";
 
-const apiEndPoint = "http://localhost:4000/usersList"
+const apiEndPoint = "http://localhost:4000/api/usersList"
 const useStyles = makeStyles((theme) => ({
 	pageContent: {
             padding:theme.spacing(3),
@@ -93,10 +93,10 @@ useEffect (() => {
  axios.get(apiEndPoint).then( res => { 
     const data  = Object.values(res.data)
     setRecords(data)
-    console.log(records)
+    console.log(res)
 }, )
 
-},[notify] )
+},[] )
 
 const handleSearch = e =>{
     let target = e.target;

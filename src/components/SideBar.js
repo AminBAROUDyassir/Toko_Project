@@ -10,10 +10,11 @@ import {
 	Avatar,
 	Drawer,
 	} from '@material-ui/core';
-import logoMain from '../logo.svg';
-import logoUser from '../logo.jpg';
+import logoMain from '../assets/logo.svg';
+import logoUser from '../assets/logo.jpg';
 import GridOnIcon from '@material-ui/icons/GridOn';
 import DashboardIcon from '@material-ui/icons/Dashboard';
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { Link } from 'react-router-dom';
 import reactDom from 'react-dom';
 
@@ -48,12 +49,16 @@ export default function SideBar() {
 			</List>
 			<Divider />
 			<List>
-				<ListItem button key="text" component={Link} to="/login">
-					<ListItemAvatar>
-						<Avatar alt="Remy Sharp" src={logoUser} />
-					</ListItemAvatar>
+				<ListItem select button key="text" component={Link} to="/login">
+				<LockOutlinedIcon fontSize="large" />
 						<ListItemText primary="Sign in" />	
 				</ListItem>
+				{/* <ListItem button key="text" component={Link} to="/login"> */}
+	{/* <ListItemAvatar> */}
+		{/* <Avatar alt="Remy Sharp" src={logoUser} /> */}
+	{/* </ListItemAvatar> */}
+		{/* <ListItemText primary="Sign in" />	 */}
+{/* </ListItem> */}
 			</List>
 			<List>
 				<ListItem button key="text" component={Link} to="/dashboard">
