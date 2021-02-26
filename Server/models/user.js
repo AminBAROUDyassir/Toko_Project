@@ -12,7 +12,8 @@ const userSchema = new mongoose.Schema({
 	experienceY: { type: Number, maxLength: 10 },
 	isAdmin: { type: Boolean },
 	date: { type: Date, default: Date.now },
-	password: { type: String, maxLength: 1000 }
+	password: { type: String, maxLength: 1000 },
+	age: { type: Number }
 });
 
 userSchema.methods.generateAuthtoken = function() {

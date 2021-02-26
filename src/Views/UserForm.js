@@ -13,10 +13,6 @@ import {
 	FilledInput
 } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import PageHeader from '../components/PageHeader';
-import { LaptopWindows } from '@material-ui/icons';
-import * as userService from '../Services/userService';
 
 const initialFValues = {
 	_id: 0,
@@ -87,6 +83,7 @@ useEffect(() => {
 						variant="outlined"
 						label="First Name"
 						name="Fname"
+						required="true"
 						value={values.Fname}
 						onChange={handleInputChange}
 						error={errors.Fname}

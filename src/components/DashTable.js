@@ -25,6 +25,7 @@ const useStyles = makeStyles({
 	table: {
         minWidth: '350px',
         maxWidth: '350px',
+		marginLeft:'10px'
 		
 	}
 });
@@ -34,18 +35,18 @@ function createData(name, cases, img) {
 }
 
 const rows = [
-	createData('United States', '28 330 141 ', USA),
-	createData('India', '11 030 176', India),
-	createData('Brazil', '10 324 463', Brazil),
-	createData('United Kingdom', '4 156 703', kingdom),
-	createData('Russia', '4 153 735', Russia),
-	createData('France', '3 721 061', France),
-	createData('Spain', '3 170 644', Spain),
-	createData('Italy', '2 848 564', Italy),
-	createData('Turkey', '2 665 194', Turkey),
-	createData('Germany', '2 416 037', Germany),
-	createData('Colombia', '2 237 542', Colombia),
-	createData('Argentina', '2 085 411', Argentina)
+	createData('United States', '28,330,141', USA),
+	createData('India', '11,030,176', India),
+	createData('Brazil', '10,324,463', Brazil),
+	createData('United Kingdom', '4,156,703', kingdom),
+	createData('Russia', '4,153,735', Russia),
+	createData('France', '3,721,061', France),
+	createData('Spain', '3,170,644', Spain),
+	createData('Italy', '2,848,564', Italy),
+	createData('Turkey', '2,665,194', Turkey),
+	createData('Germany', '2,416,037', Germany),
+	createData('Colombia', '2,237,542', Colombia),
+	createData('Argentina', '2,085,411', Argentina)
 ];
 
 export default function DashTable() {
@@ -58,7 +59,7 @@ export default function DashTable() {
 					{rows.map((row) => (
 						<TableRow key={row.name}>
 							<TableCell>
-								<img width="40px" src={row.img} />
+								<img alt="" width="40px" src={row.img} />
 							</TableCell>
 							<TableCell component="th" scope="row">
 								{row.name}

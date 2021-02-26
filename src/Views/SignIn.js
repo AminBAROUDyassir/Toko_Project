@@ -1,31 +1,21 @@
-import React from "react";
+import React, {useState} from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
 import Paper from "@material-ui/core/Paper";
-import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+import axios from 'axios';
+import { useHistory } from "react-router"
 
-// function Copyright() {
-  // return (
-    // <Typography variant="body2" color="textSecondary" align="center">
-      {/* {"Copyright © "} */}
-      {/* <Link color="inherit" href="https://material-ui.com/"> */}
-        {/* Your Website */}
-      {/* </Link>{" "} */}
-      {/* {new Date().getFullYear()} */}
-      {/* {"."} */}
-    {/* </Typography> */}
-  // );
-// }
 
+
+const apiEndPoint = "http://localhost:4000/api/auth"
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
@@ -60,9 +50,38 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
+const data = {
+  email: '',
+  password: ''
+};
 
 export default function SignIn({ loggedIn, logout, login }) {
   const classes = useStyles();
+  const [ values, setValues ] = useState(data);
+  const [ errors, setErrors ] = useState({});
+  const history = useHistory();
+
+  const handleSubmit  = async (e) => {
+	try {
+		e.preventDefault();
+		const { data } = await axios.post(apiEndPoint, { email: values.email, password: values.password });
+		localStorage.setItem('token', data);
+		history.push('/dashboard');
+	} catch (ex) {
+		if (ex.response && ex.response.status === 400) {
+			setErrors(ex.response)
+		}
+	}
+  
+};
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setValues({
+      ...values,
+      [name]: value
+    });
+  };
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -74,7 +93,6 @@ export default function SignIn({ loggedIn, logout, login }) {
           sm={8}
           md={5}
           component={Paper}
-          direction="row"
           elevation={6}
           square
         >
@@ -85,28 +103,37 @@ export default function SignIn({ loggedIn, logout, login }) {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <form className={classes.form} noValidate>
+            <form className={classes.form} onSubmit={handleSubmit} >
               <TextField
                 variant="outlined"
                 margin="normal"
                 required
                 fullWidth
+                onChange={handleInputChange}
+                type="email"
+                value={values.email}
                 id="email"
                 label="Email Address"
                 name="email"
                 autoComplete="email"
                 autoFocus
+                inputProps={{maxLength :30}}
               />
               <TextField
                 variant="outlined"
                 margin="normal"
                 required
                 fullWidth
+                onChange={handleInputChange}
                 name="password"
                 label="Password"
                 type="password"
+                value={values.password}
                 id="password"
+                error={errors.data}
+                helperText={errors.data}
                 autoComplete="current-password"
+                inputProps={{maxLength :50}}
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
@@ -114,11 +141,11 @@ export default function SignIn({ loggedIn, logout, login }) {
               />
               <Button
                 fullWidth
+                type="submit"
                 variant="contained"
                 color="primary"
                 className={classes.submit}
-                onClick={login}
-              >
+                >
                 Sign In
               </Button>
             </form>

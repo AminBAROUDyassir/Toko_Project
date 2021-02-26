@@ -15,6 +15,7 @@
     "highcharts": "^9.0.1",
     "highcharts-react-official": "^3.0.0",
     "joi-browser": "^13.4.0",
+    "jwt-decode": "^3.1.2",
     "leaflet": "^1.7.1",
     "moment": "^2.29.1",
     "react": "^17.0.1",
@@ -31,11 +32,13 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "extends": "react-app",
+    "rules": {
+      "eqeqeq": "off",
+      "no-unused-vars": "off"
+    }
   },
+  
   "browserslist": {
     "production": [
       ">0.2%",

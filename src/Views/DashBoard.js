@@ -12,7 +12,7 @@ import MoodIcon from '@material-ui/icons/Mood';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-        width: '92%',
+        width: '95%',
 		margin: theme.spacing(2)
 	},
 	icons: {
@@ -71,8 +71,8 @@ export default function DashBoard() {
 			</Grid>
             <Paper className={classes.paper}>
             <Grid container  spacing={0} justify="space-between">
-            <Grid item><DashTable/></Grid>
-            <Grid item lg={8} ><Map/></Grid>
+            <Grid item ><DashTable/></Grid>
+            <Grid item lg  md><Map/></Grid>
             </Grid>
             </Paper>
 		</div>

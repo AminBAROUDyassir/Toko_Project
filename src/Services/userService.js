@@ -5,7 +5,7 @@ const apiEndPoint = "http://localhost:4000/api/usersList"
 
 export function insertUser(data) {
 	axios.post(apiEndPoint, data)
-	.catch(err => window.alert('error while creating user'))
+	.catch(err => window.alert('error while adding new user'))
 	// let users = getAllUsers();
 	// data['id'] = generateUserId()
     // users.push(data);
@@ -16,7 +16,7 @@ export function insertUser(data) {
 export function updateUser(data) {
 	
 axios.put(apiEndPoint+'/'+data._id, data)
-.catch(err => window.alert('error while deleting user'))
+.catch(err => window.alert('error while updating user'))
     // let users = getAllUsers();
     // let recordIndex = users.findIndex(x => x.id == data.id);
     // users[recordIndex] = { ...data }

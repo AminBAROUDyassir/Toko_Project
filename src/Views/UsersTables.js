@@ -69,15 +69,12 @@ const HeadCells = [
 
 export default function UsersTables() {
 const classes = useStyles();
-// const [records, setRecords]=useState(userService.getAllUsers)
 const [records, setRecords]=useState([])
 const [filterFn, setFilterFn]=useState({fn: items => {return items;}})
 const [confirmDialog, setConfirmDialog ] = useState({isOpen:false, title:'', subTitle:''});
 const [notify, setNotify] = useState({isOpen:false, message:'', type:''})
 const [openPopup, setOpenPopup] = useState(false)
 const [recordForEdit, setRecordForEdit]= useState(null)
-const getAge = birthDate => 
-Math.floor((new Date() - new Date(birthDate).getTime()) / 3.15576e+10)
 const pages =[5, 10, 25]
 const [page, setPage] = useState(0);
 const [rowsPerPage, setRowsPerPage] = useState(pages[page]);
@@ -93,10 +90,10 @@ useEffect (() => {
  axios.get(apiEndPoint).then( res => { 
     const data  = Object.values(res.data)
     setRecords(data)
-    console.log(res)
+    console.log(data)
 }, )
 
-},[] )
+},[recordForEdit, confirmDialog, notify] )
 
 const handleSearch = e =>{
     let target = e.target;
@@ -179,7 +176,7 @@ const recordsAfterPaging = () => {
             <>
              <PageHeader 
                 title="Add New User" 
-                subtitle="Form design with Validation" 
+                subtitle="Users Liste Table" 
                 icon={<PersonAddIcon 
                 fontSize="large"/>}/>
             <Paper className={classes.pageContent}>
@@ -213,12 +210,13 @@ const recordsAfterPaging = () => {
                      {HeadCells.map(headcell => (
                      <TableCell key={headcell.id}
                      sortDirection={orderBy === headcell.id ?order:false}>
+                         {headcell.disableSorting?headcell.label:
                          <TableSortLabel 
                          active={orderBy === headcell.id}
                          direction={orderBy === headcell.id ? order : 'asc' }
                             onClick = { () => {handleSortRequest(headcell.id)}}>
                         {headcell.label}
-                     </TableSortLabel>
+                     </TableSortLabel>}
                         </TableCell>))}
                     </TableRow>
                 </TableHead>
@@ -229,7 +227,7 @@ const recordsAfterPaging = () => {
                             <TableCell>{item.email}</TableCell>
                             <TableCell>{item.gender}</TableCell>
                             <TableCell>{item.address}</TableCell>
-                            <TableCell>{getAge(item.birthday)}</TableCell>
+                            <TableCell>{item.age}</TableCell>
                             <TableCell><Button className={classes.editButton} 
                             variant="contained" 
                             color="primary" 
