@@ -3,14 +3,14 @@ import Cards from '../components/Cards';
 import Map from '../components/Map';
 import DashTable from '../components/DashTable';
 import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
-import {Typography, Grid,Radio,RadioGroup,TextField,Paper,makeStyles,Button,InputAdornment,FilledInput} from '@material-ui/core';
+import { Grid,Paper,makeStyles,Button,InputAdornment,FilledInput, Typography} from '@material-ui/core';
 import PublicIcon from '@material-ui/icons/Public';
 import ReplayIcon from '@material-ui/icons/Replay';
-import ClearIcon from '@material-ui/icons/Clear';
 import AirlineSeatFlatIcon from '@material-ui/icons/AirlineSeatFlat';
 import MoodIcon from '@material-ui/icons/Mood';
 import {getRecords} from '../Services/covidService';
-var numeral = require('numeral');
+import AnimatedNumber from 'react-animated-number';
+let numeral = require('numeral');
 
 
 const useStyles = makeStyles((theme) => ({
@@ -27,7 +27,11 @@ const useStyles = makeStyles((theme) => ({
         
         backgroundColor: '#fdfdff',
         margin: theme.spacing(1),
-    }
+    },
+	title:{
+		margin:'15px',
+		opacity: '0.8'
+	}
 }));
 
 export default function DashBoard() {
@@ -50,23 +54,23 @@ export default function DashBoard() {
 
 	return (
 		<div>
-			<Grid container spacing={2} justify="space-evenly" className={classes.root}>
+			<Grid container  spacing={2} justify="space-between" className={classes.root}>
 				<Grid item  lg={3} sm={6}>
 					<Cards
 						title="Global Cases"
 						subtitle={globalRecords}
 						status="Update Now"
 						iconHead={<PublicIcon color="primary" className={classes.icons} />}
-						iconBot={<ReplayIcon  />}
+						iconBot={<ReplayIcon  onClick={() => setGlobalRecords(null)}/>}
 					/>
 				</Grid>
-				<Grid item  lg={3} sm={6}>
+				<Grid item   lg={3} sm={6}>
 					<Cards
 						title="Deaths"
 						subtitle={deathsRecords}
 						status="Update Now"
 						iconHead={<AirlineSeatFlatIcon color="secondary" className={classes.icons} />}
-						iconBot={<ReplayIcon  />}
+						iconBot={<ReplayIcon  onClick={() => setGlobalRecords(null)}/>}
 					/>
 				</Grid>
 				<Grid item  lg={3} sm={6}>
@@ -75,7 +79,7 @@ export default function DashBoard() {
 						subtitle={confirmedRecords}
 						status="Update Now"
 						iconHead={<SentimentVeryDissatisfiedIcon className={classes.icons} />}
-						iconBot={<ReplayIcon  />}
+						iconBot={<ReplayIcon  onClick={() => setGlobalRecords(null)}/>}
 					/>
 				</Grid>
 				<Grid item  lg={3} sm={6}>
@@ -84,14 +88,20 @@ export default function DashBoard() {
 						subtitle={recovereddRecords}
 						status="Update Now"
 						iconHead={<MoodIcon style={{ color: 'green' }} className={classes.icons} />}
-						iconBot={<ReplayIcon  />}
+						iconBot={<ReplayIcon  onClick={() => setGlobalRecords(null)}/>}
 					/>
 				</Grid>
 			</Grid>
             <Paper className={classes.paper}>
+				
             <Grid container  spacing={0} justify="space-between">
-            <Grid item ><DashTable/></Grid>
-            <Grid item lg  md><Map/></Grid>
+            <Grid  item >
+				<div className={classes.title}>
+			<Typography  variant="h5">Covid-19 Stats by Country</Typography>
+			<Typography variant="subtitle1">All confirmed cases </Typography>
+			</div>
+			<DashTable/></Grid>
+            <Grid item lg={8} ><Map/></Grid>
             </Grid>
             </Paper>
 		</div>

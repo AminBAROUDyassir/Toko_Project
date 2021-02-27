@@ -1,6 +1,7 @@
 import './App.css';
+import 'fontsource-roboto';
 import React, { useState, useEffect } from 'react';
-import { Route, NavLink } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import DashBoard from '../Views/DashBoard';
 import SignIn from '../Views/SignIn';
 import SideBar from '../components/SideBar';
@@ -74,11 +75,9 @@ function App() {
 		try {
 			const jwt = localStorage.getItem('token');
 			const { _id } = jwtDecode(jwt);
-      
-			getUser(_id).then(res => 
-				setUser(res.data));
+
+			getUser(_id).then((res) => setUser(res.data));
 		} catch (error) {
-      
 			setUser(false);
 		}
 	}, []);
@@ -86,7 +85,7 @@ function App() {
 	return (
 		<ThemeProvider theme={theme}>
 			<div className={classes.appMain}>
-				<UserContext.Provider value={{Fname: user.Fname, Lname: user.Lname}}>
+				<UserContext.Provider value={{ Fname: user.Fname, Lname: user.Lname }}>
 					<SideBar />
 					<Header />
 					<Route path="/users-tables" exact component={UsersTables} />

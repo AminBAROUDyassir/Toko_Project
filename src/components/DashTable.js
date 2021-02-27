@@ -40,11 +40,11 @@ const rows = [
 	createData('Russia', '4,153,735', Russia),
 	createData('France', '3,721,061', France),
 	createData('Spain', '3,170,644', Spain),
-	createData('Italy', '2,848,564', Italy),
-	createData('Turkey', '2,665,194', Turkey),
-	createData('Germany', '2,416,037', Germany),
-	createData('Colombia', '2,237,542', Colombia),
-	createData('Argentina', '2,085,411', Argentina)
+	// createData('Italy', '2,848,564', Italy),
+	// createData('Turkey', '2,665,194', Turkey),
+	// createData('Germany', '2,416,037', Germany),
+	// createData('Colombia', '2,237,542', Colombia),
+	// createData('Argentina', '2,085,411', Argentina)
 ];
 
 export default function DashTable() {
