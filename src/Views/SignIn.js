@@ -16,6 +16,7 @@ import { useHistory } from "react-router"
 
 
 const apiEndPoint = "http://localhost:4000/api/auth"
+
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
@@ -66,7 +67,8 @@ export default function SignIn({ loggedIn, logout, login }) {
 		e.preventDefault();
 		const { data } = await axios.post(apiEndPoint, { email: values.email, password: values.password });
 		localStorage.setItem('token', data);
-		history.push('/dashboard');
+    window.location = '/dashboard';
+		// history.push('/dashboard');
 	} catch (ex) {
 		if (ex.response && ex.response.status === 400) {
 			setErrors(ex.response)

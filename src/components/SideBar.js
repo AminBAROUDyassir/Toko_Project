@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import {
 	makeStyles,
 	withStyles,
@@ -24,10 +24,14 @@ import UserContext from './../components/userContext';
 
 
 const useStyles = makeStyles((theme) =>({
-	selected: {
-		backgroundColor: "orange",
-		color: "white",
-		fontWeight: 600
+	
+	MuiMenuItem: {
+		root: {
+		  background: 'transparent',
+		  '&$selected': { // <-- mixing the two classes
+			backgroundColor: 'transparent'
+		  }
+		}
 	  },
 sideBar: {
 		color: 'white',
@@ -37,6 +41,11 @@ sideBar: {
 		width: '250px',
 		height: '150vh',
 		backgroundColor: '#263053',
+		'& MuiListItem-root.Mui-selected': {
+			backgroundColor: "orange",
+			color: "white",
+			fontWeight: 600
+		  },
 		'& .MuiSvgIcon-root': {
 			margin: '8px 10px 8px 10px'
 		}
@@ -77,7 +86,7 @@ export default function SideBar() {
 		<div className={classes.sideBar}>
 			<Divider />
 			<List>
-				<ListItem key="text">
+				<ListItem  key="text">
 					<ListItemAvatar>
 						<Avatar alt="LogoMain" src={logoMain} />
 					</ListItemAvatar>
@@ -86,20 +95,22 @@ export default function SideBar() {
 			</List>
 			<Divider />
 			<List>
+			{!loginUser ?
 			<MenuItem  >
-				{!loginUser ? <ListItem select="true" button key="text" component={Link} to="/login">
+				<ListItem  button key="text" component={Link} to="/login">
 					<LockOutlinedIcon fontSize="large" />
 					<ListItemText primary="Sign in" />
-				</ListItem>:
-				
-				<ListItem button key="text" component={Link} to="/dashboard">
+				</ListItem>
+				</MenuItem>:
+				<MenuItem  >
+			<ListItem button key="text" component={Link} to="/dashboard">
 				<ListItemAvatar>
 				<StyledBadge overlap="circle" anchorOrigin={{vertical: 'bottom',  horizontal: 'right',}} variant="dot">
                <Avatar alt="Remy Sharp" src={logoUser} /></StyledBadge>
 				</ListItemAvatar>
 				<ListItemText primary="John Smith" />	
-				</ListItem>}
-				</MenuItem>
+				</ListItem>
+				</MenuItem>}
 			</List>
 			<List>
 				<MenuItem  >
@@ -110,7 +121,7 @@ export default function SideBar() {
 			</MenuItem>
 			</List>
 			<List>
-			<MenuItem  selected={true} classeName={classes.selected}>
+			<MenuItem   >
 				<ListItem button key="text" component={Link} to="/users-tables">
 					<GridOnIcon fontSize="large" />
 					<ListItemText primary="Tables" />

@@ -37,6 +37,14 @@ const theme = createMuiTheme({
     },
   },
   overrides:{
+    MuiMenuItem: {
+      root: {
+        background: 'transparant',
+        '&$selected': { // <-- mixing the two classes
+          backgroundColor: 'orange'
+        }
+      }
+    },
     MuiAppBar:{
       root:{
         transform:'translateZ(0)'

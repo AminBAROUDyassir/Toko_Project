@@ -90,7 +90,6 @@ useEffect (() => {
  axios.get(apiEndPoint).then( res => { 
     const data  = Object.values(res.data)
     setRecords(data)
-    console.log(data)
 }, )
 
 },[recordForEdit, confirmDialog, notify] )
