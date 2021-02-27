@@ -44,7 +44,6 @@ export default function DashBoard() {
 			setDeathsRecords(numeral(response.data[0].deaths).format('0.0a').toString().toUpperCase())
 			setConfirmedRecords(numeral(response.data[0].critical).format('0.0a').toString().toUpperCase())
 			setRecoveredRecords(numeral(response.data[0].recovered).format('0.0a').toString().toUpperCase())})
-		
 		}
 			
 }, [globalRecords]);
