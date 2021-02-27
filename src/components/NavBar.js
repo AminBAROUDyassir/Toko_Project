@@ -32,7 +32,8 @@ const handleLougout  = async (e) => {
 }
 
 export default function Header() {
-	const loginUser = useContext(UserContext);
+	let loginUser = useContext(UserContext);
+	if (!loginUser.Fname) {loginUser=false;}
     const classes = useStyles();
 	return (
 		<AppBar position="static" className={classes.root}>
@@ -46,8 +47,8 @@ export default function Header() {
 					</Grid>
                     <Grid item sm></Grid>
 					<Grid item>
-					{loginUser ?<IconButton>
-									<PowerSettingsNewIcon onClick={handleLougout}/>
+					{loginUser ?<IconButton onClick={handleLougout}>
+									<PowerSettingsNewIcon />
 							</IconButton>:null}
 							<IconButton>
 							<Badge badgeContent={4} color="secondary">

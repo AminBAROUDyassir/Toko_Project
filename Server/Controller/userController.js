@@ -12,6 +12,15 @@ router.get('/', (req, res) => {
     .then ( usersList => res.send(usersList))
     .catch( err => console.error('Error while retrieving Users List : '+ JSON.stringify(err, undefined,2)) )
 })
+
+router.get('/:id', (req, res) => {
+    if(!objectID.isValid(req.params.id))
+    return res.status(400).send('No user with given id : ' + req.params.id)
+    user.findById(req.params.id).select('-password')
+    .then ( users => res.send(users))
+    .catch( err => console.error('Error while retrieving Users List : '+ JSON.stringify(err, undefined,2)) )
+})
+
 const getAge = birthDate => 
 Math.floor((new Date() - new Date(birthDate).getTime()) / 3.15576e+10)
 

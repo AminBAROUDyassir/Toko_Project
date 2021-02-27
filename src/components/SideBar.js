@@ -81,7 +81,9 @@ const StyledBadge = withStyles((theme) => ({
   }))(Badge);
 export default function SideBar() {
 	const classes = useStyles();
-	const loginUser = useContext(UserContext);
+	let loginUser = useContext(UserContext);
+	if (!loginUser.Fname) {loginUser=false;}
+	
 	return (
 		<div className={classes.sideBar}>
 			<Divider />
@@ -108,12 +110,12 @@ export default function SideBar() {
 				<StyledBadge overlap="circle" anchorOrigin={{vertical: 'bottom',  horizontal: 'right',}} variant="dot">
                <Avatar alt="Remy Sharp" src={logoUser} /></StyledBadge>
 				</ListItemAvatar>
-				<ListItemText primary="John Smith" />	
+				<ListItemText primary={`${loginUser.Fname} ${loginUser.Lname}`} />	
 				</ListItem>
 				</MenuItem>}
 			</List>
 			<List>
-				<MenuItem  >
+				<MenuItem >
 				<ListItem button key="text" component={Link} to="/dashboard">
 					<DashboardIcon fontSize="large" />
 					<ListItemText primary="Dashboard" />
@@ -121,7 +123,7 @@ export default function SideBar() {
 			</MenuItem>
 			</List>
 			<List>
-			<MenuItem   >
+			<MenuItem >
 				<ListItem button key="text" component={Link} to="/users-tables">
 					<GridOnIcon fontSize="large" />
 					<ListItemText primary="Tables" />

@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 const apiEndPoint = "http://localhost:4000/api/usersList"
 
 export function insertUser(data) {
-	axios.post(apiEndPoint, data)
+	return axios.post(apiEndPoint, data)
 	.catch(err => window.alert('error while adding new user'))
 	// let users = getAllUsers();
 	// data['id'] = generateUserId()
@@ -31,12 +31,15 @@ export function deleteUser(id) {
     // localStorage.setItem(Keys.users, JSON.stringify(users));
 }
 
-
-export  async function  getAllUsers() {
-
-	const response = await axios.get(apiEndPoint)
-	return Object.values(response.data)
-//    .catch(err => window.alert('error while getting users List'))
+export function  getUser(id) {
+	return  axios.get(apiEndPoint+'/'+id)
+	// return Object.values(response.data)
+   .catch(err => window.alert('error while getting users List'))
+}
+export function  getAllUsers() {
+	return  axios.get(apiEndPoint)
+	// return Object.values(response.data)
+   .catch(err => window.alert('error while getting users List'))
 	// if (localStorage.getItem(Keys.users) == null) localStorage.setItem(Keys.users, JSON.stringify([]));
 	// return JSON.parse(localStorage.getItem(Keys.users));
 }
