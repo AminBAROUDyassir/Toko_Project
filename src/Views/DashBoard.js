@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Cards from '../components/Cards';
 import Map from '../components/Map';
 import DashTable from '../components/DashTable';
@@ -9,6 +9,9 @@ import ReplayIcon from '@material-ui/icons/Replay';
 import ClearIcon from '@material-ui/icons/Clear';
 import AirlineSeatFlatIcon from '@material-ui/icons/AirlineSeatFlat';
 import MoodIcon from '@material-ui/icons/Mood';
+import {getRecords} from '../Services/covidService';
+var numeral = require('numeral');
+
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -29,13 +32,30 @@ const useStyles = makeStyles((theme) => ({
 
 export default function DashBoard() {
 	const classes = useStyles();
+	const [globalRecords, setGlobalRecords]=useState(null)
+	const [deathsRecords, setDeathsRecords]=useState(null)
+	const [confirmedRecords, setConfirmedRecords]=useState(null)
+	const [recovereddRecords, setRecoveredRecords]=useState(null)
+
+	useEffect(() => {
+		if (!globalRecords){
+		getRecords().then(response => {
+			setGlobalRecords(numeral(response.data[0].confirmed).format('0.0a').toString().toUpperCase())
+			setDeathsRecords(numeral(response.data[0].deaths).format('0.0a').toString().toUpperCase())
+			setConfirmedRecords(numeral(response.data[0].critical).format('0.0a').toString().toUpperCase())
+			setRecoveredRecords(numeral(response.data[0].recovered).format('0.0a').toString().toUpperCase())})
+		
+		}
+			
+}, [globalRecords]);
+
 	return (
 		<div>
 			<Grid container spacing={2} justify="space-evenly" className={classes.root}>
 				<Grid item  lg={3} sm={6}>
 					<Cards
 						title="Global Cases"
-						subtitle="+ 112M"
+						subtitle={globalRecords}
 						status="Update Now"
 						iconHead={<PublicIcon color="primary" className={classes.icons} />}
 						iconBot={<ReplayIcon  />}
@@ -44,7 +64,7 @@ export default function DashBoard() {
 				<Grid item  lg={3} sm={6}>
 					<Cards
 						title="Deaths"
-						subtitle="+ 2,4M"
+						subtitle={deathsRecords}
 						status="Update Now"
 						iconHead={<AirlineSeatFlatIcon color="secondary" className={classes.icons} />}
 						iconBot={<ReplayIcon  />}
@@ -53,7 +73,7 @@ export default function DashBoard() {
 				<Grid item  lg={3} sm={6}>
 					<Cards
 						title=" Confirmed "
-						subtitle="+85M"
+						subtitle={confirmedRecords}
 						status="Update Now"
 						iconHead={<SentimentVeryDissatisfiedIcon className={classes.icons} />}
 						iconBot={<ReplayIcon  />}
@@ -62,7 +82,7 @@ export default function DashBoard() {
 				<Grid item  lg={3} sm={6}>
 					<Cards
 						title="Recovered"
-						subtitle="+21M"
+						subtitle={recovereddRecords}
 						status="Update Now"
 						iconHead={<MoodIcon style={{ color: 'green' }} className={classes.icons} />}
 						iconBot={<ReplayIcon  />}

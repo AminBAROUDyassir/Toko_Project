@@ -9,11 +9,11 @@ import CloseIcon from '@material-ui/icons/Close';
 import { Paper, makeStyles, TableRow, TableCell, TableBody, InputAdornment, Table, TableContainer, TableHead, TablePagination, TableSortLabel, Toolbar, TextField, Button } from '@material-ui/core';
 import *  as userService from "../Services/userService";
 import Popup from "../components/Popup"
-import axios from 'axios';
 import Notification from "../components/Notification";
 import ConfirmDialog from "../components/ConfirmDialog";
+import { getAllUsers } from './../Services/userService';
 
-const apiEndPoint = "http://localhost:4000/api/usersList"
+
 const useStyles = makeStyles((theme) => ({
 	pageContent: {
             padding:theme.spacing(3),
@@ -87,7 +87,7 @@ const handleChangeRowsPerPage = event =>{
 }
 
 useEffect (() => {
- axios.get(apiEndPoint).then( res => { 
+    getAllUsers().then( res => { 
     const data  = Object.values(res.data)
     setRecords(data)
 }, )
@@ -113,7 +113,6 @@ const handleSearch = e =>{
          resetForm();
          setRecordForEdit(null)
          setOpenPopup(false);
-        //  setRecords(userService.getAllUsers);
          setNotify({
              isOpen: true,
              message: 'Submitted Successfully',
@@ -127,7 +126,6 @@ const openInPopup = item => {
 const onDelete = id => {
     setConfirmDialog({...ConfirmDialog, isOpen:false})
     userService.deleteUser(id);
-    // setRecords(userService.getAllUsers);
     setNotify({
         isOpen: true,
         message: 'Deleted Successfully',
@@ -179,7 +177,6 @@ const recordsAfterPaging = () => {
                 icon={<PersonAddIcon 
                 fontSize="large"/>}/>
             <Paper className={classes.pageContent}>
-
     <Toolbar>
         <TextField
         className={classes.searchInput}

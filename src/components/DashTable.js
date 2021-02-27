@@ -4,10 +4,7 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import { CardMedia } from '@material-ui/core';
 import USA from '../assets/flags/Flag of United States.gif';
 import India from '../assets/flags/Flag of India.gif';
 import Brazil from '../assets/flags/Flag of Brazil.gif';
@@ -29,6 +26,7 @@ const useStyles = makeStyles({
 		
 	}
 });
+
 
 function createData(name, cases, img) {
 	return { name, cases, img };
